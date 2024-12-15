@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 244, 67, 54),
           title: Text(
-            'Weather Forecast',
+            'Weather Forecast111',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
