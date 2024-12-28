@@ -24,15 +24,16 @@ class ReadWriteFileExample extends StatefulWidget {
 
 class _ReadWriteFileExampleState extends State<ReadWriteFileExample> {
   final TextEditingController _textController = TextEditingController();
-static const String localFileName='demo_localfile.txt';
-  String _localFileContent='';
-  String _localFilePath=localFileName;
+
+  static const String localFileName = 'demo_localfile.txt';
+  String _localFileContent = '';
+  String _localFilePath = localFileName;
 
   @override
   void initState() {
     super.initState();
     _readTextFromLocalFile();
-    _getLocalFile.then((file)=>setState(()=>_localFilePath=file.path));
+    _getLocalFile.then((file) => setState(() => _localFilePath = file.path));
   }
 
   @override
@@ -51,22 +52,21 @@ static const String localFileName='demo_localfile.txt';
               focusNode: textFieldFocusNode,
               controller: _textController,
               maxLines: null,
-              style: TextStyle(fontSize: 20)
-          ),
+              style: TextStyle(fontSize: 20)),
           ButtonBar(
             children: <Widget>[
               MaterialButton(
                 child: Text('Load', style: TextStyle(fontSize: 20)),
-                onPressed: () async{
+                onPressed: () async {
                   await _readTextFromLocalFile();
-                  _textController.text=_localFileContent;
+                  _textController.text = _localFileContent;
                   FocusScope.of(context).requestFocus(textFieldFocusNode);
                   log('Данные подгуржены');
                 },
               ),
               MaterialButton(
                 child: Text('Save', style: TextStyle(fontSize: 20)),
-                onPressed: () async{
+                onPressed: () async {
                   await _writeTextLocalFile(_textController.text);
                   _textController.clear();
                   await _readTextFromLocalFile();
@@ -76,42 +76,44 @@ static const String localFileName='demo_localfile.txt';
             ],
           ),
           Divider(height: 20.0),
-          Text('Local file path:', style: Theme.of(context).textTheme.titleLarge),
+          Text('Local file path:',
+              style: Theme.of(context).textTheme.titleLarge),
           Text(_localFilePath, style: Theme.of(context).textTheme.titleMedium),
           Divider(height: 20.0),
-          Text('Local file content:', style: Theme.of(context).textTheme.titleLarge),
-          Text(_localFileContent, style: Theme.of(context).textTheme.titleMedium),
+          Text('Local file content:',
+              style: Theme.of(context).textTheme.titleLarge),
+          Text(_localFileContent,
+              style: Theme.of(context).textTheme.titleMedium),
         ],
       ),
     );
   }
 
-  Future<String> get _getLocalPath async{
-    final directory=await getApplicationDocumentsDirectory();
+  Future<String> get _getLocalPath async {
+    final directory = await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
-  Future<File> get _getLocalFile async{
-    final path=await _getLocalPath;
+  Future<File> get _getLocalFile async {
+    final path = await _getLocalPath;
     return File('$path/$localFileName');
-}
+  }
 
-Future<File> _writeTextLocalFile(String text) async{
-    final file=await _getLocalFile;
+  Future<File> _writeTextLocalFile(String text) async {
+    final file = await _getLocalFile;
     return file.writeAsString(text);
-}
+  }
 
-Future _readTextFromLocalFile() async{
+  Future _readTextFromLocalFile() async {
     String content;
-    try{
-      final file=await _getLocalFile;
-      content=await file.readAsString();
-    }catch(e){
-      content='Error loading local file^ $e';
+    try {
+      final file = await _getLocalFile;
+      content = await file.readAsString();
+    } catch (e) {
+      content = 'Error loading local file^ $e';
     }
     setState(() {
-      this._localFileContent;
+      _localFileContent = content;
     });
-}
-
+  }
 }
