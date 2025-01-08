@@ -1,3 +1,4 @@
+import 'package:basics_2/theme11/screens/location_screen.dart';
 import 'package:basics_2/theme11/screens/weather_forecast_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
      theme: ThemeData(
        useMaterial3: false,
      ),
-      home: WeatherForecastScreen(),
+      home: LocationScreen(),
     );
   }
 }
