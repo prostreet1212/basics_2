@@ -31,15 +31,17 @@ class PersonRepositoryImpl implements PersonRepository {
   Future<Either<Failure, List<PersonEntity>>> searchPerson(String query) async{
     return await _getPersons((){
       return remoteDataSource.searchPerson(query);
-    });
+    }
+    );
+
   }
 
   Future<Either<Failure,List<PersonModel>>>_getPersons(Future<List<PersonModel>> Function() getPerosns) async {
     if (await networkInfo.isConnected) {
       try{
-        final remorePerson=await getPerosns();
-        localDataSource.personsToCache(remorePerson);
-        return Right(remorePerson);
+        final List<PersonModel> remotePerson=await getPerosns();
+        localDataSource.personsToCache(remotePerson);
+        return Right(remotePerson);
       }on ServerException{
         return Left(ServerFailure());
       }
