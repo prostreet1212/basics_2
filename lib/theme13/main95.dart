@@ -1,5 +1,6 @@
 
 
+import 'package:basics_2/theme13/common/app_colors.dart';
 import 'package:basics_2/theme13/features/presentation/bloc/person_list_cubit/person_list_cubit.dart';
 import 'package:basics_2/theme13/features/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:basics_2/theme13/features/presentation/pages/home_page.dart';
@@ -21,12 +22,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<PersonListCubit>(create: (context)=>sl<PersonListCubit>()),
+        BlocProvider<PersonListCubit>(create: (context)=>sl<PersonListCubit>()..loadPerson()),
         BlocProvider<PersonSearchBloc>(create: (context)=>sl<PersonSearchBloc>()),
       ],
       child: MaterialApp(
         theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.grey),
+          useMaterial3: false,
+          colorScheme: ColorScheme.dark(
+            surface:AppColors.mainBackground,
+          ),
+        scaffoldBackgroundColor: AppColors.greyColor),
         home:  HomePage(),
       ),
     );

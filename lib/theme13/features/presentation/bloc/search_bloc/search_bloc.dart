@@ -22,7 +22,7 @@ class PersonSearchBloc extends Bloc<PersonSearchEvent,PersonSearchState> {
       SearchPersons event, Emitter<PersonSearchState> emit) async {
     emit(PersonSearchLoading());
     final failureOrPerson =
-    await searchPerson(SearchPersonParams(query: event.personQuery));
+    await searchPerson(SearchPersonParams(query: event.personQuery,page: event.page));
     emit(failureOrPerson.fold(
             (failure) => PersonSearchError(message: _mapFailureToMessage(failure)),
             (person) => PersonSearchLoaded(persons: person)));

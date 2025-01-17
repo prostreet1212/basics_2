@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: ^2.3.5
   internet_connection_checker: ^3.0.1
   get_it: ^8.0.3
+  cached_network_image: ^3.4.1
 
 
 
@@ -78,6 +79,7 @@ flutter:
   assets:
       - assets/images/bg.jpg
       - assets/icons/icon.png
+      - lib/theme13/assets/images/noimage.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
