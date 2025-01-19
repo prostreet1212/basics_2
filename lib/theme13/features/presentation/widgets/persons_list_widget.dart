@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PersonsList extends StatelessWidget {
   final scrollController = ScrollController();
-  final int page = -1;
+  //final int page = -1;
 
   PersonsList({Key? key}) : super(key: key);
   void setupScrollController(BuildContext context) {
@@ -47,20 +47,15 @@ class PersonsList extends StatelessWidget {
       return ListView.separated(
         controller: scrollController,
         itemBuilder: (context, index) {
-         // if (index < persons.length) {
+          if (index < persons.length) {
             return PersonCard(person: persons[index]);
-         /* } else {
+          } else {
             Timer(const Duration(milliseconds: 30), () {
               scrollController
                   .jumpTo(scrollController.position.maxScrollExtent);
             });
-            //return _loadingIndicator();
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-              color: Colors.green,
-            );
-          }*/
+            return _loadingIndicator();
+          }
         },
         separatorBuilder: (context, index) {
           return Divider(

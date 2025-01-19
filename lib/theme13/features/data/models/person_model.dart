@@ -3,7 +3,7 @@ import 'package:basics_2/theme13/features/domain/entities/person_entity.dart';
 import 'location_model.dart';
 
 class PersonModel extends PersonEntity {
-  PersonModel({
+   PersonModel({
     required id,
     required name,
     required status,
@@ -15,6 +15,7 @@ class PersonModel extends PersonEntity {
     required  image,
     required  episode,
     required  created,
+     pages
   }):super(
     id: id,
     name: name,
@@ -27,9 +28,34 @@ class PersonModel extends PersonEntity {
     image: image,
     episode: episode,
     created: created,
+     pages: pages,
+
+
   );
 
-  factory PersonModel.fromJson(Map<String, dynamic> json) {
+   factory PersonModel.fromJsonWithPages(Map<String, dynamic> json,int pages) {
+     return PersonModel(
+       id: json['id'] as int,
+       name: json['name'] as String,
+       status: json['status'] as String,
+       species: json['species'] as String,
+       type: json['type'] as String,
+       gender: json['gender'] as String,
+       origin: json['origin'] != null
+           ? LocationModel.fromJson(json['origin'])
+           : null,
+       location: json['location'] != null
+           ? LocationModel.fromJson(json['location'])
+           : null,
+       image: json['image'] as String,
+       episode:
+       (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
+       created: DateTime.parse(json['created'] as String),
+       pages: pages
+     );
+   }
+
+  factory PersonModel.fromJson(Map<String, dynamic> json,) {
     return PersonModel(
       id: json['id'] as int,
       name: json['name'] as String,

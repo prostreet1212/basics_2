@@ -12,8 +12,9 @@ class PersonEntity extends Equatable {
   final String image;
   final List<String> episode;
   final DateTime created;
+  final int? pages;
 
-  const PersonEntity({
+    PersonEntity({
     required this.id,
     required this.name,
     required this.status,
@@ -25,6 +26,7 @@ class PersonEntity extends Equatable {
     required this.image,
     required this.episode,
     required this.created,
+      this.pages,
   });
 
   @override
@@ -40,6 +42,7 @@ class PersonEntity extends Equatable {
     image,
     episode,
     created,
+
   ];
 }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:basics_2/theme13/features/presentation/bloc/person_list_cubit/person_list_state.dart';
 import 'package:basics_2/theme13/features/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:basics_2/theme13/features/presentation/bloc/search_bloc/search_event.dart';
@@ -13,14 +15,14 @@ class CustomeSearchDelegate extends SearchDelegate{
   CustomeSearchDelegate():super(searchFieldLabel:'Search  for characters...');
 
   final scrollSearchController = ScrollController();
-  bool firstRun=true;
+  //bool firstRun=true;
 
-  void setupScrollSearchController(BuildContext context,String personQuery,int page) {
-    context.read<PersonSearchBloc>().add(SearchPersons(personQuery,page));
+  void setupScrollSearchController(BuildContext context,String personQuery) {
+    context.read<PersonSearchBloc>().add(SearchPersons(personQuery));
     scrollSearchController.addListener(() {
       if (scrollSearchController.position.atEdge) {
         if (scrollSearchController.position.pixels != 0) {
-          context.read<PersonSearchBloc>().add(SearchPersons(personQuery,page));
+          context.read<PersonSearchBloc>().add(SearchPersons(personQuery));
         }
       }
     });
@@ -53,54 +55,61 @@ class CustomeSearchDelegate extends SearchDelegate{
       tooltip: 'Back',
       onPressed: (){
       close(context, null);
-
       },
      );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    /*bool first=true;
-    if(first==true){
-      context.read<PersonSearchBloc>().add(SearchPersons(query));
       setupScrollSearchController(context,query);
-      first=false;
-    }else{*/
-      setupScrollSearchController(context,query,1);
-    //}
-
-    //BlocProvider.of<PersonSearchBloc>(context,listen: false)..add(SearchPersons(query));
-    //print('inside custom search delegate and search query is $query');
    return BlocBuilder<PersonSearchBloc,PersonSearchState>(
        builder: (context,state){
-          if(state is PersonSearchLoading){
+         List<PersonEntity> persons = [];
+         bool isLoading = false;
+          if(state is PersonSearchLoading&& state.isFirstFetch){
             return Center(
               child: CircularProgressIndicator(),
             );
-          }else if(state is PersonSearchLoaded){
-            final persons=state.persons;
+          } else if (state is PersonSearchLoading) {
+            persons = state.oldPersonsList;
+            isLoading = true;
+          } else if(state is PersonSearchLoaded){
+             persons=state.persons;
             if(persons.isEmpty){
               return _showErrorText('Characters not found');
             }
-
-            return Container(
-              child: ListView.builder(
-                controller: scrollSearchController,
-                itemCount:persons.isNotEmpty?persons.length:0,
-                  itemBuilder: (context,index){
-                  PersonEntity result=persons[index];
-                  return SearchResult(personResult: result);
-                  }),
-            );
           }else if(state is PersonSearchError){
             return _showErrorText(state.message);
-          }else{
-            return Center(
-              child: Icon(
-                Icons.now_wallpaper),
-            );
           }
+            return   Container(
+              child: ListView.builder(
+                  controller: scrollSearchController,
+                  itemCount: persons.length + (isLoading ? 1 : 0),
+                  itemBuilder: (context,index){
+
+                    if (index < persons.length) {
+                      PersonEntity result=persons[index];
+                      return SearchResult(personResult: result);
+                    } else {
+                      Timer(const Duration(milliseconds: 30), () {
+                        scrollSearchController
+                            .jumpTo(scrollSearchController.position.maxScrollExtent);
+                      });
+                      return _loadingIndicator();
+                    }
+                  }),
+            );
+
        });
+  }
+
+  Widget _loadingIndicator() {
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 
   Widget _showErrorText(String errorMessage){
