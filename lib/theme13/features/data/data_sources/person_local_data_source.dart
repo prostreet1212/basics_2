@@ -15,6 +15,7 @@ abstract class PersonLocalDataSource {
 }
 
 const CACHED_PERSONS_LIST = 'CACHED_PERSONS_LIST';
+
 class PersonLocalDataSourceImpl implements PersonLocalDataSource {
   final SharedPreferences sharedPreferences;
 
