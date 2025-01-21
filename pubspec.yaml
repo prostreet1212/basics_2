@@ -47,6 +47,7 @@ dependencies:
   get_it: ^8.0.3
   cached_network_image: ^3.4.1
   webview_flutter: ^4.10.0
+  webview_flutter_plus: ^0.4.10
 
 
 
@@ -81,6 +82,7 @@ flutter:
       - assets/images/bg.jpg
       - assets/icons/icon.png
       - lib/theme13/assets/images/noimage.jpg
+      - lib/theme14/lesson119/assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
