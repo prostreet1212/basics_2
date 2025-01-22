@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,16 +20,32 @@ class _WebViewLocalPageState extends State<WebViewLocalPage> {
   @override
   void initState() {
     super.initState();
-    _webController = WebViewControllerPlus(
-
-    )
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      //..loadRequest(Uri.parse('lib/theme14/lesson119/assets/index.html'))
-      //..loadFlutterAssetWithServer('lib/theme14/lesson119/assets/index.html', localhostServer.port!)
-    //..loadFile('lib/theme14/lesson119/assets/index.html')
-    //..loadFlutterAsset('lib/theme14/lesson119/assets/index.html')
-    ;
-    //loadLocalHTML();
+    _webController = WebViewControllerPlus()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadFlutterAssetWithServer(
+              'lib/theme14/lesson119/assets/index.html', localhostServer.port!)
+          ..addJavaScriptChannel('MyJSChannel',
+              onMessageReceived: (message) async {
+            log('Javascript: ${message.message}');
+            await showDialog(
+                context: context,
+                builder: (context)=>AlertDialog(
+                  content: Text(message.message,style: TextStyle(fontSize: 15),),
+                  actions: [
+                    TextButton(
+                      child: Text('Хорошо'),
+                        onPressed: (){
+                        _webController.runJavaScript(
+                          'sendOK()',
+                        );
+                        Navigator.pop(context);
+                        },
+                        )
+                  ],
+                ));
+          })
+        //..loadRequest(Uri.parse('uri'))
+        ;
   }
 
   @override
@@ -58,13 +75,13 @@ class _WebViewLocalPageState extends State<WebViewLocalPage> {
 // </html>''';
 
   Future<void> loadLocalHTML() async {
-    final html=await rootBundle.loadString('lib/theme14/lesson119/assets/index.html');
-    final url = Uri.dataFromString(
+    final String html =
+        await rootBundle.loadString('lib/theme14/lesson119/assets/index.html');
+    final String url = Uri.dataFromString(
       html,
       mimeType: 'text/html',
       encoding: Encoding.getByName('utf-8'),
     ).toString();
     _webController.loadRequest(Uri.parse(url));
-
   }
 }

@@ -53,7 +53,8 @@ class _WebViewPageState extends State<WebViewPage> {
         }),
       )
       //..loadRequest(Uri.parse('https://flutter.dev'));
-      ..loadRequest(Uri.parse('https://kdrc.ru/wp-admin'));
+      ..loadRequest(Uri.parse('https://kdrc.ru/wp-admin'))
+    ;
   }
 
   @override
