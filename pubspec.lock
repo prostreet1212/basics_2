@@ -437,6 +437,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  hive:
+    dependency: transitive
+    description:
+      name: hive
+      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
   http:
     dependency: "direct main"
     description:
@@ -461,6 +469,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  hydrated_bloc:
+    dependency: "direct main"
+    description:
+      name: hydrated_bloc
+      sha256: af35b357739fe41728df10bec03aad422cdc725a1e702e03af9d2a41ea05160c
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.5"
   internet_connection_checker:
     dependency: "direct main"
     description:
@@ -733,6 +749,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  pull_to_refresh_flutter3:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh_flutter3
+      sha256: "37a88d901cca9a46dbdd46523de8e7b35a3e58634a0e775b1a5904981f69b353"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   rxdart:
     dependency: transitive
     description:

@@ -120,7 +120,7 @@ class __$$CharacterImplCopyWithImpl<$Res>
           : info // ignore: cast_nullable_to_non_nullable
               as Info,
       results: null == results
-          ? _value._results
+          ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
               as List<Results>,
     ));
@@ -130,22 +130,15 @@ class __$$CharacterImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CharacterImpl implements _Character {
-  const _$CharacterImpl(
-      {required this.info, required final List<Results> results})
-      : _results = results;
+  const _$CharacterImpl({required this.info, required this.results});
 
   factory _$CharacterImpl.fromJson(Map<String, dynamic> json) =>
       _$$CharacterImplFromJson(json);
 
   @override
   final Info info;
-  final List<Results> _results;
   @override
-  List<Results> get results {
-    if (_results is EqualUnmodifiableListView) return _results;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_results);
-  }
+  final List<Results> results;
 
   @override
   String toString() {
@@ -158,13 +151,13 @@ class _$CharacterImpl implements _Character {
         (other.runtimeType == runtimeType &&
             other is _$CharacterImpl &&
             (identical(other.info, info) || other.info == info) &&
-            const DeepCollectionEquality().equals(other._results, _results));
+            const DeepCollectionEquality().equals(other.results, results));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, info, const DeepCollectionEquality().hash(_results));
+      runtimeType, info, const DeepCollectionEquality().hash(results));
 
   /// Create a copy of Character
   /// with the given fields replaced by the non-null parameter values.
