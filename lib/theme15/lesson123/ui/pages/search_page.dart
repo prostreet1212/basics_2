@@ -26,7 +26,8 @@ class _SearchPageState extends State<SearchPage> {
 
   Timer? searchDebounce;
 
-  final _storage=HydratedBloc.storage;
+  final Storage _storage=HydratedBloc.storage;
+
 
   @override
   void initState() {
@@ -125,6 +126,31 @@ if(_storage.runtimeType.toString().isEmpty){
       controller: refreshController,
       enablePullUp: true,
       enablePullDown: false,
+      footer: CustomFooter(
+          builder: ( context, mode){
+            Widget body ;
+            if(mode==LoadStatus.idle){
+              body =  SizedBox();
+            }
+            else if(mode==LoadStatus.loading){
+              body =  Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            else if(mode == LoadStatus.failed){
+              body = Text("Load Failed!Click retry!");
+            }
+            else if(mode == LoadStatus.canLoading){
+              body = Text("release to load more");
+            }
+            else{
+              body = SizedBox();
+            }
+            return Container(
+              height: 55.0,
+              child: Center(child:body),
+            );
+          }),
       onLoading: (){
         _isPagination=true;
         _currentPage++;

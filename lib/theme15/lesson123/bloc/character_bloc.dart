@@ -19,6 +19,7 @@ class CharacterBloc extends HydratedBloc<CharacterEvent, CharacterState> {
     on<CharacterEventFetch>((event, emit) async {
       emit(CharacterState.loading());
       try {
+
         Character _characterLoaded =
             await characterRepo.getCharacter(event.page, event.name).timeout(Duration(seconds: 5));
         emit(CharacterState.loaded(characterLoaded: _characterLoaded));
