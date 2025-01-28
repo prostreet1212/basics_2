@@ -34,16 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
 
     tiles = [
-      Padding(
-        key:UniqueKey(),
-        padding: const EdgeInsets.all(8.0),
-        child: ColorWidget(text: '1',),
-      ),
-      Padding(
-        key:UniqueKey(),
-        padding: const EdgeInsets.all(8.0),
-        child: ColorWidget(text: '2',),
-      ),
+      ColorWidget(text: '1',),
+      ColorWidget(text: '2',),
     ];
   }
 
