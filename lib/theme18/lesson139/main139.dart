@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'lesson139/pages/animation_page.dart';
+import 'pages/animation_page.dart';
 
 void main() {
   runApp(const MyApp());
